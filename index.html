@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" 
+    integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <link rel="icon" href="assets/user-image.webp"/>
+    <link rel="stylesheet" href="css/index.css"/>
+    <title>Registeration Form</title>
+</head>
+<body>
+    
+<form id="regForm" action="index.html" class="jumbotron bg-white border m-xl-5 m-lg-5 m-md-5 m-sm-5 m-1">
+    <h1 class="display-3 text-left ">Register</h1>
+    <hr/>
+    <!-- One "tab" for each step in the form: -->
+    <div class="tab" id="about">
+        <div class="top-heading row justify-content-center mx-auto d-flex w-100 my-5" style="text-align:center">
+            <span class="step col-xl-2 text-center p-0 my-2 col-lg-3 col-md-3 col-6 active">About Yourself</span>
+            <span class="step text-center p-0  col-xl-3 my-2 col-lg-3 col-md-3 col-6">Contact Info</span>
+            <span class="step text-center p-0 col-xl-3 my-2 col-lg-3 col-md-3 col-6">Education</span>
+            <span class="step text-center p-0 col-xl-3 my-2 col-lg-3 col-md-3 col-6">Preview</span>
+          </div>
+          <hr/>
+          <h3 class="display-4 text-bold ">Basic Info</h3>
+          <h4 class=" mb-3 ">Name<b class='text-danger'>*</b></h4>
+        <div class="form-inline">
+            <input placeholder="First name..." id="firstName" name="fname" class="form-control w-50 ">
+            <input placeholder="Last name..." id="lastName"  name="lname" class="form-control w-50">
+        </div>
+        <h4 class=" my-3 text-bold">Profile Picture</h4>
+        <div class="form-inline">
+            <input onchange="loadImageFile(event)" class="form-control w-50 choose-image-input mx-auto " type="file" accept="image/*"/>
+            <div class="display-image ml-xl-3 lxl-lg-3 ml-md-3 mx-auto mt-2 border">
+                <img src="assets/user-image.webp" id="dummy_image"/>
+            </div>
+        </div>
+        <label for='dob' class=" mt-5"><h4>Date of Birth<b class='text-danger'>*</b></h4></label>
+        <input id='dob' class="form-control w-75" type="date" />
+        <label for='phone' class="lead  mt-3"><h4>Phone<b class='text-danger'>*</b></h4></label>
+        <input id='phone' class="form-control w-75" type="number"  />
+        <label for='email' class="lead  mt-3"><h4>Email<b class='text-danger'>*</b></h4></label>
+        <input id='email' class="form-control w-75" type="email"  />
+
+        <div class="page-count text-danger text-bold ">1/4</div>
+     
+    </div>
+    <div class="tab" id='contact'>
+        <div class="top-heading row  justify-content-center mx-auto d-flex w-100 my-5" style="text-align:center">
+            <span class="step col-xl-2 text-center p-0 my-2 col-lg-3 col-md-3 col-6">About Yourself</span>
+            <span class="step text-center p-0  col-xl-3 my-2 col-lg-3 col-md-3 col-6 active">Contact Info</span>
+            <span class="step text-center p-0  col-xl-3 my-2 col-lg-3 col-md-3 col-6">Education</span>
+            <span class="step text-center p-0 col-xl-3 my-2 col-lg-3 col-md-3 col-6">Preview</span>
+          </div>
+          <hr/>
+          <h3 class="display-4 text-bold">Address</h3>
+          <h4 class=" mb-3 ">Mail Address</h4>
+        <textarea id="mail-address" rows="3" placeholder="Address"  class="form-control w-100"></textarea>
+        <div class="form-inline my-3">
+            <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12 mb-2">
+                <input type="text" placeholder="City" name="city" id="submit-city-mail" class="form-control w-100"/>
+            </div>
+            <div class="ccol-xl-4 col-lg-4 col-md-4 col-sm-4 col-12 mb-2">
+                <select id="state_choose-mail" class="dropdown form-control w-100">
+                    <option value="Select">Select a State</option>
+                    <option value="Kerala">Kerala</option>
+                    <option value="Haryana">Haryana</option>
+                    <option value="Punjab">Punjab</option>
+                    <option value="Gujarat">Gujarat</option>
+                    <option value="Bihar">Bihar</option>
+                </select>
+            </div>
+            <div class="ccol-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+                <input type="number" placeholder="Zip Code" id="zip-code-mail" name="city" class="form-control w-100"/>
+            </div>
+        </div>
+
+        <h4 class="mb-3 ">Permanent Address</h4>
+        <input type="checkbox" class="mr-2 mb-4"  id="check-permanent-address"/>Same as Mail Address
+        <div class="hide-permanent-address-field">
+            <textarea id="permanent-address" rows="3" placeholder="Address" class="form-control w-100"></textarea>
+            <div class="form-inline my-3">
+                <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12 mb-2">
+                    <input type="text" placeholder="City" id="submit-city-perm" name="city" class="form-control w-100"/>
+                </div>
+                <div class="ccol-xl-4 col-lg-4 col-md-4 col-sm-4 col-12 mb-2">
+                    <select id="state_choose-perm" class="dropdown form-control w-100">
+                        <option value="Select">Select a State</option>
+                        <option value="Kerala">Kerala</option>
+                        <option value="Haryana">Haryana</option>
+                        <option value="Punjab">Punjab</option>
+                        <option value="Gujarat">Gujarat</option>
+                        <option value="Bihar">Bihar</option>
+                    </select>
+                </div>
+                <div class="ccol-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+                    <input type="number" placeholder="Zip Code" id="zip-code-perm" name="Zip-code" class="form-control w-100"/>
+                </div>
+            </div>
+        </div>
+        <div class="page-count text-danger text-bold ">2/4</div>
+    </div>
+    <div class="tab" id="education">
+        <div class="top-heading row border justify-content-center mx-auto d-flex w-100 my-5" style="text-align:center">
+            <span class="step col-xl-2 p-0 text-center col-lg-3 my-2 col-md-3 col-6">About Yourself</span>
+            <span class="step text-center p-0  col-xl-3 my-2 col-lg-3 col-md-3 col-6">Contact Info</span>
+            <span class="step text-center p-0  col-xl-3 my-2 col-lg-3 col-md-3 col-6 active">Education</span>
+            <span class="step text-center  p-0 col-xl-3 my-2 col-lg-3 col-md-3 col-6">Preview</span>
+          </div>
+          <hr/>
+          <h3 class="display-4 text-bold">Education</h3>
+          <h4 class=" mb-3 ">Higher Education</h4>
+          <div class="dropdown my-3">
+              <select id="higher-edu-drop" class="form-control">
+                  <option value="B.tech">B.tech</option>
+                  <option value="M.tech">M.tech</option>
+                  <option value="MBA">MBA</option>
+                  <option value="P.hd">P.hd</option>
+                  <option value="B.com">B.com</option>
+              </select>
+          </div>
+          <div id="skills">
+              <h4 class="my-2">Skills</h4>
+              <div class="form-inline">
+                <input type="text" id="input_skill" class="form-control w-50"/>
+                <button class="btn add_skill_btn  ml-2 btn-outline-primary">+ Add Skill</button>
+              </div>
+              <div class="add_skills_container">
+               
+              </div>
+          </div>
+          <div class="resume-education my-5">
+              <div class="row">
+                  <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12 my-3">
+                      <h4>Resume<b class='text-danger'>*</b></h4>
+                      <input id="submit-resume" type="file" accept="application/msword,text/plain, application/pdf"/>
+                      <small class="font-italic d-block">Upload only <b>.pdf</b> or <b>.docx</b> file</small>
+                  </div>
+                  <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12 my-3">
+                    <h4>Education<b class='text-danger'>*</b></h4>
+                    <input id="submit-edu-docs" type="file" multiple accept="application/msword,text/plain, application/pdf"/>
+                    <small class="font-italic d-block">Upload only <b >Education</b> related documents in <b>.pdf</b> or <b>.docx</b> format.</small>
+                </div>
+              </div>
+          </div>
+
+      <div class="page-count text-danger text-bold ">3/4</div>
+    </div>
+    <div class="tab" id="preview-all">
+        <div class="top-heading row border justify-content-center mx-auto d-flex w-100 my-5" style="text-align:center">
+            <span class="step col-xl-2 p-0 text-center col-lg-3 my-2 col-md-3 col-6">About Yourself</span>
+            <span class="step text-center p-0 col-xl-3 col-lg-3 my-2 col-md-3 col-6">Contact Info</span>
+            <span class="step text-center p-0  col-xl-3 col-lg-3 my-2 col-md-3 col-6">Education</span>
+            <span class="step text-center p-0 col-xl-3 col-lg-3 my-2 col-md-3 col-6 active">Preview</span>
+          </div>
+          <hr/>
+          <h3 class="display-4 text-bold">Preview</h3>
+          <div class="preview-form-details-container">
+            
+          </div>
+      <div class="page-count text-danger text-bold ">4/4</div>
+    </div>
+    <div style="overflow:auto;">
+      <div  class="my-3">
+        <button class="btn btn-outline-danger" type="button" id="prevBtn" onclick="nextPrev(-1)">Previous</button>
+        <button class="btn btn-outline-danger" type="button" id="nextBtn" onclick="nextPrev(1)">Next</button>
+        <button class="btn btn-outline-primary" type="button" id="previewBtn" onclick="nextPrev(1)">Preview</button>
+      </div>
+    </div>
+    <!-- Circles which indicates the steps of the form: -->
+  </form>
+</body>
+<script src="js/app.js"></script>
+<!-- JS, Popper.js, and jQuery -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+</html>
