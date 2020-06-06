@@ -109,11 +109,11 @@ function showFormData(){
 </tr>
 <tr>
     <th>Resume</th>
-    <td>${resumeInput.value}</td>
+    <td>${Array.from(resumeDisplay.querySelectorAll('.d-flex')).map(element=>element.textContent+' | ')}</td>
 </tr>
 <tr>
     <th>Educational Documents</th>
-    <td>${eduDocsInput.value}</td>
+    <td>${Array.from(eduDocsDisplay.querySelectorAll('.d-flex')).map(element=>element.textContent+' | ')}</td>
 </tr>
 </table>
   `;
@@ -219,7 +219,7 @@ let loadImageFile=(event)=>
         console.log(fileArray[i]);
         const a=document.createElement('a');
         a.setAttribute('target','_blank');
-        a.className='d-block';
+        a.classList.add('d-flex','flex-column');
         a.href=window.URL.createObjectURL(fileArray[i]);
         a.textContent=fileArray[i].name;
         event.target.parentNode.appendChild(a);
