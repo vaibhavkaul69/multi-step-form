@@ -26,6 +26,8 @@ const higherEducationDropdown=document.getElementById('higher-edu-drop');
 const addSkillBtn=document.querySelector('.add_skill_btn');
 const resumeInput=document.getElementById('submit-resume');
 const eduDocsInput=document.getElementById('submit-edu-docs');
+let resumeDisplay=document.querySelector('.resume-display');
+let eduDocsDisplay=document.querySelector('.edu-docs-display');
 
 /*Preview all data*/
 let previewData=document.querySelector('.preview-form-details-container');
@@ -205,8 +207,28 @@ function validateForm() {
   return valid; // return the valid status
 }
 */
-let loadImageFile=(event)=>{
-    console.log(event.target.files);
+let loadImageFile=(event)=>
+{
+  let fileArray=Array.from(event.target.files);
+  console.log(fileArray);
+    if(event.target.files[0].type.includes('pdf') || event.target.files[0].type.includes('docs') || event.target.files[0].type.includes('txt') )
+    {
+     //const fileArray=Array.prototype.slice.call(event.target.files);
+      for(let i in fileArray)
+      {
+        console.log(fileArray[i]);
+        const a=document.createElement('a');
+        a.setAttribute('target','_blank');
+        a.className='d-block';
+        a.href=window.URL.createObjectURL(fileArray[i]);
+        a.textContent=fileArray[i].name;
+        event.target.parentNode.appendChild(a);
+      }
+      /*
+      {
+      }
+      */
+    }
     if(event.target.files[0].size>=60000 && event.target.files[0].size<=200000){
         imageUpload.src=URL.createObjectURL(event.target.files[0]);
     }
@@ -214,6 +236,7 @@ let loadImageFile=(event)=>{
       inputDisplayImage.value='';
         alert('Please upload an image of size between 60Kb-200Kb');
     }
+    
 }
 
 addSkillBtn.addEventListener('click',(event)=>{
