@@ -117,6 +117,12 @@ button {
 #previewBtn{
   display: none;
 }
+.hidden{
+  display: none;
+}
+.show{
+  display: block;
+}
 @media only screen and (max-width:550px){
     .choose-image-input{
         top:0px;

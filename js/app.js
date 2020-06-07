@@ -133,16 +133,8 @@ function showTab(n)
   }
   else if(n == (x.length - 2)) {
     previewBtn.style.display='inline';
-    previewBtn.textContent='Preview';
-    previewBtn.classList.remove('btn-outline-success');
-    previewBtn.classList.add('btn-outline-primary');
     nextBtn.style.display='none';
     showFormData();
-  }
-  else if(n === x.length) {
-    previewBtn.textContent='Submit';
-    previewBtn.classList.remove('btn-outline-primary');
-    previewBtn.classList.add('btn-outline-success');
   }
   else{
     prevBtn.style.display = "inline";
