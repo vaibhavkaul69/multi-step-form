@@ -1,6 +1,7 @@
 /*The about form fields*/
 const firstName=document.getElementById('firstName');
 const lastName=document.getElementById('lastName');
+let imageInput=document.querySelector('.choose-image-input');
 const imageUpload=document.getElementById('dummy_image');
 const dateOfBirth=document.getElementById('dob');
 const phoneNumber=document.getElementById('phone');
@@ -105,7 +106,7 @@ function showFormData(){
 </tr>
 <tr>
     <th>Skills</th>
-    <td>${skillContainer.innerHTML}</td>
+    <td>${Array.from(document.querySelectorAll('.listContent')).map(element=>element.textContent)}</td>
 </tr>
 <tr>
     <th>Resume</th>
@@ -133,8 +134,6 @@ function showTab(n)
   else if(n == (x.length - 2)) {
     previewBtn.style.display='inline';
     nextBtn.style.display='none';
-  }
-  else if(n == (x.length-1)){
     showFormData();
   }
   else {
@@ -149,94 +148,101 @@ function showTab(n)
 
 function checkMailandPermAdd(){
   if(isPermAddSameMailAdd.checked){
-    console.log('Hello check');
+   permanentAddress.value=mailAddress.value;
+   cityPerm.value=cityMail.value;
+   chooseStatePerm.value=chooseStateMail.value;
+   zipCodePerm.value=zipCodeMail.value;
+   permanentAddress.setAttribute('disabled','disabled');
+   cityPerm.setAttribute('disabled','disabled');
+   chooseStatePerm.setAttribute('disabled','disabled');
+   zipCodePerm.setAttribute('disabled','disabled');
   }
   else{
-    console.log('Hello uncheck');
+    permanentAddress.removeAttribute('disabled');
+    cityPerm.removeAttribute('disabled');
+    chooseStatePerm.removeAttribute('disabled');
+    zipCodePerm.removeAttribute('disabled');
+    permanentAddress.value='';
+    cityPerm.value='';
+    chooseStatePerm.value='';
+    zipCodePerm.value='';
+    
   }
   
 }
-function nextPrev(n) {
+function nextPrev(n)
+ {
   // This function will figure out which tab to display
   // Exit the function if any field in the current tab is invalid:
-  //if (n == 1 && !validateForm()) return false;
+  
   // Hide the current tab:
-  if(currentTab < x.length)//0 1
+  if(currentTab < x.length && currentTab!==x.length)//0 1
   {
     x[currentTab].style.display = "none";
-    x[currentTab].classList.add('hidden');
+    currentTab = currentTab + n;
   }
   
-  // Increase or decrease the current tab by 1:
-  currentTab = currentTab + n;//1 
   // if you have reached the end of the form...
-  if (currentTab === x.length) 
+  if (currentTab === (x.length-1)) 
   {
-    alert('Form Submitted');
     // ... the form gets submitted:
-    document.getElementById("regForm").submit();
-    return false;
-  }
-  // Otherwise, display the correct tab:
-  showTab(currentTab);
-  console.log(currentTab);
-  if(currentTab===(x.length-1)){
-    alert('3rd tab');
-  }
-}
-
-/*
-function validateForm() {
-  // This function deals with validation of the form fields
-  var  y, i, valid = true;
-  y = x[currentTab].getElementsByTagName("input");
-  // A loop that checks every input field in the current tab:
-  for (i = 0; i < y.length; i++) {
-    // If a field is empty...
-    if (y[i].value == "") {
-      // add an "invalid" class to the field:
-      y[i].className += " invalid";
-      // and set the current valid status to false
-      valid = false;
-    }
-  }
-  // If the valid status is true, mark the step as finished and valid:
-  if (valid) {
-    document.getElementsByClassName("step")[currentTab].className += " finish";
-  }
-  return valid; // return the valid status
-}
-*/
-let loadImageFile=(event)=>
-{
-  let fileArray=Array.from(event.target.files);
-  console.log(fileArray);
-    if(event.target.files[0].type.includes('pdf') || event.target.files[0].type.includes('docs') || event.target.files[0].type.includes('txt') )
+    if(validateFields())
     {
-     //const fileArray=Array.prototype.slice.call(event.target.files);
-      for(let i in fileArray)
-      {
-        console.log(fileArray[i]);
-        const a=document.createElement('a');
-        a.setAttribute('target','_blank');
-        a.classList.add('d-flex','flex-column');
-        a.href=window.URL.createObjectURL(fileArray[i]);
-        a.textContent=fileArray[i].name;
-        event.target.parentNode.appendChild(a);
-      }
-      /*
-      {
-      }
-      */
-    }
-    if(event.target.files[0].size>=60000 && event.target.files[0].size<=200000){
-        imageUpload.src=URL.createObjectURL(event.target.files[0]);
+      alert('Form Submitted');
+      document.getElementById("regForm").submit();
     }
     else{
-      inputDisplayImage.value='';
-        alert('Please upload an image of size between 60Kb-200Kb');
+      return false;
     }
     
+  }
+  // Otherwise, display the correct tab:
+  console.log(currentTab);
+  if(currentTab < x.length){
+    showTab(currentTab);
+  }
+  
+}
+
+let loadImageFile=(event)=>
+{
+     let fileArray=Array.from(event.target.files);
+     console.log(fileArray);
+      for(let i in fileArray)
+      {
+          if(fileArray[i].type.includes('pdf') || fileArray[i].type.includes('docs'))
+          {
+            console.log(fileArray[i]);
+            const a=document.createElement('a');
+            a.setAttribute('target','_blank');
+            a.setAttribute('download',fileArray[i].name);
+            a.classList.add('d-flex','flex-column');
+            a.href=window.URL.createObjectURL(fileArray[i]);
+            a.textContent=fileArray[i].name;
+            event.target.parentNode.appendChild(a);
+          } 
+          else if(fileArray[i].type.includes('png') || fileArray[i].type.includes('jpg') || fileArray[i].type.includes('webp') ||fileArray[i].type.includes('jpeg'))
+          {
+              if(fileArray[i].size>=60000 && fileArray[i].size<=200000)
+              {
+                  //let dimension=(imageUpload.clientHeight*imageUpload.clientWidth)/1000000;
+                  //console.log(dimension);
+                imageUpload.src=URL.createObjectURL(fileArray[i]);
+              }
+            else
+            {
+              alert('Please upload an image of size between 60Kb-200Kb');
+              imageUpload.value='';
+            }
+              
+          }
+          else{
+            imageUpload.value='';
+            resumeDisplay.value='';
+            eduDocsDisplay.value='';
+            alert('Upload a valid format file :)');
+          }
+      }
 }
 
 addSkillBtn.addEventListener('click',(event)=>{
@@ -247,7 +253,7 @@ addSkillBtn.addEventListener('click',(event)=>{
    <button class='closeBtn btn btn-outline-danger' type="button"> X</button>
 </li>             
   `;
-  inputSkill.value='';
+  inputSkill.value=' ';
 });
 const deleteSkills=(e)=>{
   e.preventDefault();
@@ -260,3 +266,110 @@ const deleteSkills=(e)=>{
         }
 };
 skillContainer.addEventListener('click',deleteSkills);
+
+function validatePhone(input){
+  console.log(input.value);
+  if(input.value.length>=10){
+    phoneNumber.setAttribute('disabled','disabled');
+  }
+  return true;
+}
+function validateZip(input){
+  console.log(input.value);
+  if(input.value.length>=6)
+  {
+      if(input.id=='zip-code-mail'){
+        zipCodeMail.setAttribute('disabled','disabled');
+      }
+      else if(input.id=='zip-code-perm'){
+        zipCodePerm.setAttribute('disabled','disabled');
+      }
+  }
+  return true;
+}
+function ValidateEmail(mail) {
+    if (/^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i.test(mail))
+    {
+      console.log(mail);
+      return true;
+    }
+    else{
+      alert("You have entered an invalid email address!")
+      return false;
+    }
+      
+}
+function ValidateName(fname,lname){
+  let totalLength=fname.length+lname.length;
+  if(totalLength<2){
+    alert('Please Enter Correct Name.!');
+    return false;
+  }
+  else{
+    return true;
+  }
+}
+function ValidateMailingAddress(mail,city,zip){
+  let total=mail.length+city.length+zip.length;
+  if(total<5){
+    alert('Please Enter Correct Address or City Name or Zip-Code.!');
+    return false;
+  }
+  else{
+    return true;
+  }
+}
+function ValidatePermanentAddress(mail,city,zip){
+  let total=mail.length+city.length+zip.length;
+  if(total<5){
+    alert('Please Enter Correct Address or City Name or Zip-Code.!');
+    return false;
+  }
+  else{
+    return true;
+  }
+}
+function ValidateSkills(skills){
+  if(skills.length===0){
+    alert('Please Enter Correct Some Skills.!');
+    return false;
+  }
+  return true;
+}
+function ValidateDisplayImage(display){
+  if(display==''){
+    alert('Upload A Display Picture.!');
+    return false;
+  }
+  return true;
+}
+function ValidateResumeEduDocs(resume,eduDocs){
+  if(resume=='' && eduDocs==''){
+    alert('Upload The Educational Documents or Resume.!');
+    return false;
+  }
+  return true;
+}
+function validateFields()
+{
+  let email=ValidateEmail(emailId.value);
+  console.log(email);
+  let name=ValidateName(firstName.value,lastName.value);
+  console.log(name);
+  let mailing=ValidateMailingAddress(mailAddress.value,cityMail.value,zipCodeMail.value);
+  console.log(mailing);
+  let permanent=ValidatePermanentAddress(permanentAddress.value,cityPerm.value,zipCodePerm.value);
+  console.log(permanent);
+  let skills=ValidateSkills(skillContainer.children);
+  console.log(skills);
+  let displayImage=ValidateDisplayImage(imageInput.value);
+  console.log(displayImage);
+  let resumeEduDocs=ValidateResumeEduDocs(resumeInput.value,eduDocsInput.value);
+  console.log(resumeEduDocs);
+  let resultString=""+email+name+mailing+permanent+skills+resumeEduDocs+displayImage;
+  console.log(resultString);
+  if(resultString.indexOf('false')==-1){
+    return true;
+  }
+  return false;
+}
