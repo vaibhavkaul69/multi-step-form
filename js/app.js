@@ -133,10 +133,18 @@ function showTab(n)
   }
   else if(n == (x.length - 2)) {
     previewBtn.style.display='inline';
+    previewBtn.textContent='Preview';
+    previewBtn.classList.remove('btn-outline-success');
+    previewBtn.classList.add('btn-outline-primary');
     nextBtn.style.display='none';
     showFormData();
   }
-  else {
+  else if(n === x.length) {
+    previewBtn.textContent='Submit';
+    previewBtn.classList.remove('btn-outline-primary');
+    previewBtn.classList.add('btn-outline-success');
+  }
+  else{
     prevBtn.style.display = "inline";
     previewBtn.style.display='none';
     nextBtn.style.display='inline';
@@ -179,17 +187,17 @@ function nextPrev(n)
   if(currentTab < x.length && currentTab!==x.length)//0 1
   {
     x[currentTab].style.display = "none";
-    currentTab = currentTab + n;
+    
   }
-  
+  currentTab = currentTab + n;
   // if you have reached the end of the form...
   if (currentTab === (x.length-1)) 
   {
     // ... the form gets submitted:
     if(validateFields())
     {
-      alert('Form Submitted');
       document.getElementById("regForm").submit();
+      alert('Form Submitted');
     }
     else{
       return false;
@@ -232,14 +240,14 @@ let loadImageFile=(event)=>
             else
             {
               alert('Please upload an image of size between 60Kb-200Kb');
-              imageUpload.value='';
+              imageInput.value='';
             }
               
           }
           else{
-            imageUpload.value='';
-            resumeDisplay.value='';
-            eduDocsDisplay.value='';
+            imageInput.value='';
+            resumeInput.value='';
+            eduDocsInput.value='';
             alert('Upload a valid format file :)');
           }
       }
@@ -269,10 +277,15 @@ skillContainer.addEventListener('click',deleteSkills);
 
 function validatePhone(input){
   console.log(input.value);
-  if(input.value.length>=10){
-    phoneNumber.setAttribute('disabled','disabled');
+  if(input.value.length<10){
+    input.style.borderColor='#dc3545';
+    return false;
   }
-  return true;
+  else {
+    phoneNumber.setAttribute('disabled','disabled');
+    input.style.borderColor='lightgrey';
+    return true;
+  }
 }
 function validateZip(input){
   console.log(input.value);
@@ -294,7 +307,7 @@ function ValidateEmail(mail) {
       return true;
     }
     else{
-      alert("You have entered an invalid email address!")
+      alert("Please Enter a valid Email Address!")
       return false;
     }
       
@@ -309,10 +322,18 @@ function ValidateName(fname,lname){
     return true;
   }
 }
+function ValidateBirthDate(dob){
+  if(dob==''){
+    alert('Please Enter The Date of Birth.!');
+    return false;
+  }
+  return true;
+
+}
 function ValidateMailingAddress(mail,city,zip){
   let total=mail.length+city.length+zip.length;
   if(total<5){
-    alert('Please Enter Correct Address or City Name or Zip-Code.!');
+    alert('Please Enter Correct Mailing-Address or Mailing-City Name or Mailing-Zip-Code.!');
     return false;
   }
   else{
@@ -322,7 +343,7 @@ function ValidateMailingAddress(mail,city,zip){
 function ValidatePermanentAddress(mail,city,zip){
   let total=mail.length+city.length+zip.length;
   if(total<5){
-    alert('Please Enter Correct Address or City Name or Zip-Code.!');
+    alert('Please Enter Correct Permanent-Address or Permanent-City Name or Permanent-Zip-Code.!');
     return false;
   }
   else{
@@ -331,7 +352,7 @@ function ValidatePermanentAddress(mail,city,zip){
 }
 function ValidateSkills(skills){
   if(skills.length===0){
-    alert('Please Enter Correct Some Skills.!');
+    alert('Please Enter Some Skills.!');
     return false;
   }
   return true;
@@ -344,8 +365,12 @@ function ValidateDisplayImage(display){
   return true;
 }
 function ValidateResumeEduDocs(resume,eduDocs){
-  if(resume=='' && eduDocs==''){
-    alert('Upload The Educational Documents or Resume.!');
+  if(resume==''){
+    alert('Please Upload Resume.!');
+    return false;
+  }
+  else if(eduDocs==''){
+    alert('Please Upload Educational Documents');
     return false;
   }
   return true;
@@ -356,6 +381,10 @@ function validateFields()
   console.log(email);
   let name=ValidateName(firstName.value,lastName.value);
   console.log(name);
+  let birthDate=ValidateBirthDate(dateOfBirth.value);
+  console.log(birthDate);
+  let phone=validatePhone(phoneNumber);
+  console.log(phone);
   let mailing=ValidateMailingAddress(mailAddress.value,cityMail.value,zipCodeMail.value);
   console.log(mailing);
   let permanent=ValidatePermanentAddress(permanentAddress.value,cityPerm.value,zipCodePerm.value);
@@ -366,7 +395,7 @@ function validateFields()
   console.log(displayImage);
   let resumeEduDocs=ValidateResumeEduDocs(resumeInput.value,eduDocsInput.value);
   console.log(resumeEduDocs);
-  let resultString=""+email+name+mailing+permanent+skills+resumeEduDocs+displayImage;
+  let resultString=""+email+name+phone+birthDate+mailing+permanent+skills+resumeEduDocs+displayImage;
   console.log(resultString);
   if(resultString.indexOf('false')==-1){
     return true;
